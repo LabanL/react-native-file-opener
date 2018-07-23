@@ -1,5 +1,10 @@
-react-native-file-opener
+react-native-file-opener   
 -
+> Fork desc   
+> 1.Fix iOS build error;   
+> 2.Fix Android open file runtime error;   
+> 3.Optimize Android open file process;
+
 A React Native module that allows you to open a file (mp3, mp4, pdf, word, excel, dwg etc.) on your device with its default application
 
 iOS | Android
