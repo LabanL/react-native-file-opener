@@ -27,10 +27,16 @@ RCT_REMAP_METHOD(open, filePath:(NSString *)filePath fileMine:(NSString *)fileMi
     
     self.FileOpener = [UIDocumentInteractionController interactionControllerWithURL:fileURL];
     self.FileOpener.delegate = self;
-    
-    UIViewController *ctrl = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
-    
-    BOOL wasOpened = [self.FileOpener presentOpenInMenuFromRect:ctrl.view.bounds inView:ctrl.view animated:YES];
+    BOOL wasOpened = NO;
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) { // iPad
+        UIViewController *ctrl = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
+        CGFloat screenWidth = ctrl.view.bounds.size.width;
+        CGFloat screenHeight = ctrl.view.bounds.size.height;
+       wasOpened = [self.FileOpener presentOptionsMenuFromRect:CGRectMake(screenWidth * 0.6, screenHeight * 0.95, screenWidth / 2,screenHeight * 3 /2) inView:ctrl.view animated:YES];
+    } else { // iPhone
+        UIViewController *ctrl = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
+        wasOpened = [self.FileOpener presentOpenInMenuFromRect:ctrl.view.bounds inView:ctrl.view animated:YES];
+    }
     
     if (wasOpened) {
         resolve(@"Open success!!");
